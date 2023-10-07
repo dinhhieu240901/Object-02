@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      class Switch {
+        constructor() {
+          this.switchIsOn = false;
+        }
+
+        turnOn() {
+          this.switchIsOn = true;
+        }
+
+        turnOff() {
+          this.switchIsOn = false;
+        }
+
+        isSwitchOn() {
+          return this.switchIsOn;
+        }
+      }
+
+      class Light {
+        constructor() {
+          this.lightIsOn = false;
+        }
+
+        turnOn() {
+          this.lightIsOn = true;
+          console.log("Light is on");
+        }
+
+        turnOff() {
+          this.lightIsOn = false;
+          console.log("Light is off");
+        }
+
+        isLightOn() {
+          return this.lightIsOn;
+        }
+      }
+
+      const switchObj = new Switch();
+      const lightObj = new Light();
+
+      for (let i = 0; i < 10; i++) {
+        if (!switchObj.isSwitchOn()) {
+          switchObj.turnOn();
+        } else {
+          switchObj.turnOff();
+        }
+
+        if (switchObj.isSwitchOn()) {
+          lightObj.turnOn();
+        } else {
+          lightObj.turnOff();
+        }
+
+        console.log("Light is on:", lightObj.isLightOn());
+
+       
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Caro Game</title>
+    <style>
+      .board {
+        position: relative;
+        width: 400px;
+        height: 400px;
+        display: grid;
+        grid-template-columns: repeat(20, 1fr);
+        grid-template-rows: repeat(20, 1fr);
+      }
+
+      .cell {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        border: 1px solid #000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 24px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="board" id="board"></div>
+
+    <script>
+      const board = document.getElementById("board");
+      const cells = [];
+      const rowCount = 20;
+      const colCount = 20;
+      let currentPlayer = "X";
+      let gameOver = false;
+
+      // Tạo bàn cờ và thêm sự kiện click
+      for (let i = 0; i < rowCount; i++) {
+        cells[i] = [];
+        for (let j = 0; j < colCount; j++) {
+          const cell = document.createElement("div");
+          cell.className = "cell";
+          cell.dataset.row = i;
+          cell.dataset.col = j;
+          cell.addEventListener("click", handleClick);
+          board.appendChild(cell);
+          cells[i][j] = cell;
+        }
+      }
+
+      function handleClick(event) {
+        if (gameOver) return;
+
+        const row = parseInt(event.target.dataset.row);
+        const col = parseInt(event.target.dataset.col);
+
+        if (!cells[row][col].textContent) {
+          cells[row][col].textContent = currentPlayer;
+
+          if (checkWin(row, col)) {
+            gameOver = true;
+            alert(`Player ${currentPlayer} wins!`);
+          } else {
+            currentPlayer = currentPlayer === "X" ? "O" : "X";
+          }
+        }
+      }
+
+      function checkWin(row, col) {
+        const directions = [
+          { dx: 0, dy: 1 }, // right
+          { dx: 1, dy: 0 }, // down
+          { dx: 1, dy: 1 }, // diagonal down-right
+          { dx: -1, dy: 1 }, // diagonal down-left
+        ];
+
+        const player = cells[row][col].textContent;
+
+        for (const direction of directions) {
+          let count = 1;
+
+          // Check in one direction
+          let x = col + direction.dx;
+          let y = row + direction.dy;
+          while (
+            x >= 0 &&
+            x < colCount &&
+            y >= 0 &&
+            y < rowCount &&
+            cells[y][x].textContent === player
+          ) {
+            count++;
+            x += direction.dx;
+            y += direction.dy;
+          }
+
+          // Check in the opposite direction
+          x = col - direction.dx;
+          y = row - direction.dy;
+          while (
+            x >= 0 &&
+            x < colCount &&
+            y >= 0 &&
+            y < rowCount &&
+            cells[y][x].textContent === player
+          ) {
+            count++;
+            x -= direction.dx;
+            y -= direction.dy;
+          }
+
+          if (count >= 5) {
+            return true;
+          }
+        }
+
+        return false;
+      }
+    </script>
+  </body>
+</html>

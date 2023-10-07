@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      class Apple {
+        constructor() {
+          this.weight = 10;
+        }
+
+        getWeight() {
+          return this.weight;
+        }
+
+        decreaseWeight() {
+          if (this.weight > 0) {
+            this.weight--;
+          }
+        }
+      }
+
+      class Human {
+        constructor(name, gender, weight) {
+          this.name = name;
+          this.gender = gender;
+          this.weight = weight;
+        }
+
+        say(message) {
+          document.write(`${this.name} says: ${message}<br>`);
+        }
+
+        eat(apple) {
+          if (apple.getWeight() > 0) {
+            this.weight++;
+            apple.decreaseWeight();
+          }
+        }
+
+        checkAppleWeight(apple) {
+          return apple.getWeight();
+        }
+      }
+
+      const apple = new Apple();
+      const adam = new Human("Adam", "male", 66);
+      const eva = new Human("Eva", "female", 56);
+
+      while (apple.getWeight() > 0) {
+        adam.say("I'm hungry. Let's eat an apple!");
+        adam.eat(apple);
+        document.write(`Apple's weight: ${apple.getWeight()}<br>`);
+        document.write(`Adam's weight: ${adam.weight}<br>`);
+
+        eva.say("I'm hungry. Let's eat an apple!");
+        eva.eat(apple);
+        document.write(`Apple's weight: ${apple.getWeight()}<br>`);
+        document.write(`Eva's weight: ${eva.weight}<br>`);
+      }
+    </script>
+  </body>
+</html>
